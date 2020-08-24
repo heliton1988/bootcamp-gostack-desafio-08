@@ -36,14 +36,6 @@ Neste desafio, tive pegar o desafio desenvolvido no módulo antetior `(modulo 07
 Click aqui ⬇<br />
 [Rocketshoes mobile Web](https://github.com/heliton1988/rocketshoes-mobile)
 
-## :iphone: Milha extra
-
-Fui um pouco além do proposto!<br />
-- Deixei o `layout` da aplicação com as minhas caracteríscas
-- Inclui `popup` para um melhor feedback para o usuário
-- Implementei um `Scroll` baseado na quantidade de itens do carrinho
-- Para uma melhor `experiencia do usuário`, inclui uma tela de carrinha vazio
-
 
 ## :wrench: Ferramentas utilizadas
 
