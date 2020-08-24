@@ -2,10 +2,10 @@
   <img src="./.github/gostack.png" width="100" />
 </h1>
 
-<h2 align="center">Desafio 07 - Arquitetura Flux</h2>
+<h2 align="center">Desafio 08 - Utilizando React Hooks</h2>
 
 <p align="center">
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/heliton1988/rocketshoes-mobile?color=%23FF500F">
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/heliton1988/bootcamp-gostack-desafio-08?color=%23FF500F">
 
   <a href="https://www.linkedin.com/in/helitonoliveira/">
     <img alt="Made by Héliton Oliveira" src="https://img.shields.io/badge/made%20by-Héliton Oliveira-%23FF500F">
@@ -13,8 +13,8 @@
 
   <img alt="License" src="https://img.shields.io/badge/license-MIT-%23FF500F">
 
-  <a href="https://github.com/heliton1988/rocketshoes-mobile/stargazers">
-    <img alt="Stargazers" src="https://img.shields.io/github/stars/heliton1988/rocketshoes-mobile?style=social">
+  <a href="https://github.com/heliton1988/bootcamp-gostack-desafio-08/stargazers">
+    <img alt="Stargazers" src="https://img.shields.io/github/stars/heliton1988/bootcamp-gostack-desafio-08?style=social">
   </a>
 </p>
 
@@ -31,10 +31,10 @@
 
 ## :pencil: Sobre
 
-A propósta desse desafio foi migrar o projeto de e-commerce criado na web para dispositivos móveis utilizando React native. Mantendo as mesmas funcionalidades tanto no web quanto no mobile<br />
+Neste desafio, tive pegar o desafio desenvolvido no módulo antetior `(modulo 07)`, onde tive de desevolver um e-commerce '**`Rocketshoes`**' mobile utilizando a sintaxe de `class components` e adaptá-lo para um formato mais moderno, utilizando a sintaxe de `function components` e os `Hooks` do React.<br />
 
 Click aqui ⬇<br />
-[Projeto Web](https://github.com/heliton1988/rocketshoes)
+[Rocketshoes mobile Web](https://github.com/heliton1988/rocketshoes-mobile)
 
 ## :iphone: Milha extra
 
