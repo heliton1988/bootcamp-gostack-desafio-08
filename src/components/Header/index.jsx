@@ -1,6 +1,6 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import colors from '../../styles/colors';
@@ -14,8 +14,10 @@ import {
   BasketCounterText,
 } from './styles';
 
-function Header({cartSize}) {
+export default function Header() {
   const navigation = useNavigation();
+
+  const cartSize = useSelector(state => state.cart.length);
 
   return (
     <Container>
@@ -38,7 +40,3 @@ function Header({cartSize}) {
     </Container>
   );
 }
-
-export default connect(state => ({
-  cartSize: state.cart.length,
-}))(Header);

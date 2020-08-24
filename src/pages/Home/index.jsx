@@ -1,7 +1,6 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import colors from '../../styles/colors';
 import {formatPrice} from '../../util/format';
@@ -25,133 +24,110 @@ import {
   CardQuatity,
 } from './styles';
 
-class Home extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      products: [],
-    };
+export default function Home() {
+  const [products, setProducts] = useState([]);
+
+  const amount = useSelector(state =>
+    state.cart.reduce((sumAmount, product) => {
+      sumAmount[product.id] = product.amount;
+
+      return sumAmount;
+    }, {})
+  );
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    async function loadProducts() {
+      const response = await api.get(`products`);
+
+      const data = response.data.map(product => ({
+        ...product,
+        priceFormatted: formatPrice(product.price),
+      }));
+
+      setProducts(data);
+    }
+
+    loadProducts();
+  }, []);
+
+  function handleAddToCart(id) {
+    dispatch(CartActions.addToCartRequest(id));
   }
 
-  async componentDidMount() {
-    const response = await api.get(`products`);
+  return (
+    <Container>
+      <ScrollContainer>
+        <Tittle>RUNNING</Tittle>
 
-    const data = response.data.map(product => ({
-      ...product,
-      priceFormatted: formatPrice(product.price),
-    }));
+        <CardScrollContainer
+          data={products}
+          keyExtractor={product => String(product.id)}
+          renderItem={({item: product}) => (
+            <CardContainer key={product.id}>
+              <CardBox>
+                <CardImage source={{uri: product.image}} />
+                <CardText>{product.title}</CardText>
+                <CardPrice>{product.priceFormatted}</CardPrice>
+                <CardButton onPress={() => handleAddToCart(product.id)}>
+                  <CardQuatityContainer>
+                    <Icon name="shopping-cart" size={20} color={colors.white} />
+                    <CardQuatity>{amount[product.id] || 0}</CardQuatity>
+                  </CardQuatityContainer>
+                  <CardButtonText>ADICIONAR</CardButtonText>
+                </CardButton>
+              </CardBox>
+            </CardContainer>
+          )}
+        />
 
-    this.setState({products: data});
-  }
+        <Tittle>CAMINHADA</Tittle>
 
-  handleAddToCart = id => {
-    const {addToCartRequest} = this.props;
+        <CardScrollContainer
+          data={products}
+          keyExtractor={product => String(product.id)}
+          renderItem={({item: product}) => (
+            <CardContainer key={product.id}>
+              <CardBox>
+                <CardImage source={{uri: product.image}} />
+                <CardText>{product.title}</CardText>
+                <CardPrice>{product.priceFormatted}</CardPrice>
+                <CardButton onPress={() => handleAddToCart(product.id)}>
+                  <CardQuatityContainer>
+                    <Icon name="shopping-cart" size={20} color={colors.white} />
+                    <CardQuatity>{amount[product.id] || 0}</CardQuatity>
+                  </CardQuatityContainer>
+                  <CardButtonText>ADICIONAR</CardButtonText>
+                </CardButton>
+              </CardBox>
+            </CardContainer>
+          )}
+        />
 
-    addToCartRequest(id);
-  };
+        <Tittle>TRILHA</Tittle>
 
-  render() {
-    const {products} = this.state;
-    const {amount} = this.props;
-
-    return (
-      <Container>
-        <ScrollContainer>
-          <Tittle>RUNNING</Tittle>
-
-          <CardScrollContainer
-            data={products}
-            keyExtractor={product => String(product.id)}
-            renderItem={({item: product}) => (
-              <CardContainer key={product.id}>
-                <CardBox>
-                  <CardImage source={{uri: product.image}} />
-                  <CardText>{product.title}</CardText>
-                  <CardPrice>{product.priceFormatted}</CardPrice>
-                  <CardButton onPress={() => this.handleAddToCart(product.id)}>
-                    <CardQuatityContainer>
-                      <Icon
-                        name="shopping-cart"
-                        size={20}
-                        color={colors.white}
-                      />
-                      <CardQuatity>{amount[product.id] || 0}</CardQuatity>
-                    </CardQuatityContainer>
-                    <CardButtonText>ADICIONAR</CardButtonText>
-                  </CardButton>
-                </CardBox>
-              </CardContainer>
-            )}
-          />
-
-          <Tittle>CAMINHADA</Tittle>
-
-          <CardScrollContainer
-            data={products}
-            keyExtractor={product => String(product.id)}
-            renderItem={({item: product}) => (
-              <CardContainer key={product.id}>
-                <CardBox>
-                  <CardImage source={{uri: product.image}} />
-                  <CardText>{product.title}</CardText>
-                  <CardPrice>{product.priceFormatted}</CardPrice>
-                  <CardButton onPress={() => this.handleAddToCart(product.id)}>
-                    <CardQuatityContainer>
-                      <Icon
-                        name="shopping-cart"
-                        size={20}
-                        color={colors.white}
-                      />
-                      <CardQuatity>{amount[product.id] || 0}</CardQuatity>
-                    </CardQuatityContainer>
-                    <CardButtonText>ADICIONAR</CardButtonText>
-                  </CardButton>
-                </CardBox>
-              </CardContainer>
-            )}
-          />
-
-          <Tittle>TRILHA</Tittle>
-
-          <CardScrollContainer
-            data={products}
-            keyExtractor={product => String(product.id)}
-            renderItem={({item: product}) => (
-              <CardContainer key={product.id}>
-                <CardBox>
-                  <CardImage source={{uri: product.image}} />
-                  <CardText>{product.title}</CardText>
-                  <CardPrice>{product.priceFormatted}</CardPrice>
-                  <CardButton onPress={() => this.handleAddToCart(product.id)}>
-                    <CardQuatityContainer>
-                      <Icon
-                        name="shopping-cart"
-                        size={20}
-                        color={colors.white}
-                      />
-                      <CardQuatity>{amount[product.id] || 0}</CardQuatity>
-                    </CardQuatityContainer>
-                    <CardButtonText>ADICIONAR</CardButtonText>
-                  </CardButton>
-                </CardBox>
-              </CardContainer>
-            )}
-          />
-        </ScrollContainer>
-      </Container>
-    );
-  }
+        <CardScrollContainer
+          data={products}
+          keyExtractor={product => String(product.id)}
+          renderItem={({item: product}) => (
+            <CardContainer key={product.id}>
+              <CardBox>
+                <CardImage source={{uri: product.image}} />
+                <CardText>{product.title}</CardText>
+                <CardPrice>{product.priceFormatted}</CardPrice>
+                <CardButton onPress={() => handleAddToCart(product.id)}>
+                  <CardQuatityContainer>
+                    <Icon name="shopping-cart" size={20} color={colors.white} />
+                    <CardQuatity>{amount[product.id] || 0}</CardQuatity>
+                  </CardQuatityContainer>
+                  <CardButtonText>ADICIONAR</CardButtonText>
+                </CardButton>
+              </CardBox>
+            </CardContainer>
+          )}
+        />
+      </ScrollContainer>
+    </Container>
+  );
 }
-
-const mapStateToProps = state => ({
-  amount: state.cart.reduce((amount, product) => {
-    amount[product.id] = product.amount;
-
-    return amount;
-  }, {}),
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(CartActions, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
